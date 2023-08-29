@@ -1,0 +1,51 @@
+.breadcrumb-product {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 15rem;
+}
+
+.breadcrumb-product:hover {
+  white-space: nowrap;
+  overflow: visible;
+}
+
+/* Target the input type number and hide the inner spin buttons */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Additional styling to ensure consistency in appearance */
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+  appearance: textfield; /* Rest of the browsers */
+  border: 0;
+  outline: 0;
+}
+
+.minus-button,
+.plus-button {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  box-sizing: border-box;
+  padding: 0 5px 2.5px;
+  width: 2rem;
+  height: 2rem;
+}
+
+.minus-button:hover,
+.plus-button:hover {
+  outline: none;
+  border: none;
+  background-color: #efefef;
+  border-radius: 0.5rem;
+}
+
+.clear-button {
+  outline: none;
+  border: none;
+  background-color: transparent;
+}
