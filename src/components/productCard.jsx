@@ -11,6 +11,7 @@ const ProductCard = ({ item }) => {
         height: "17rem",
         boxShadow: "0px 0px 10px #ccc",
         textDecoration: "none",
+        boxSizing: "border-box",
       }}
     >
       <Card.Img
@@ -19,7 +20,11 @@ const ProductCard = ({ item }) => {
         width={120}
         height={120}
         className="p-1"
-        style={{ objectFit: "contain" }}
+        style={{
+          objectFit: "contain",
+          boxSizing: "border-box",
+          overflow: "hidden",
+        }}
       />
       <Card.Body style={{ padding: "1rem 0.5rem" }}>
         <Card.Title
@@ -31,12 +36,13 @@ const ProductCard = ({ item }) => {
             whiteSpace: "normal",
             overflow: "hidden",
             textOverflow: "ellipsis",
-            fontSize: "0.8rem",
+            fontSize: "1rem",
+            height: "3.75rem",
           }}
         >
           {item.title}
         </Card.Title>
-        <Card.Text className="fw-bold fs-5" style={{ fontSize: "1rem" }}>
+        <Card.Text className="fw-bold fs-4">
           ${item.price}
         </Card.Text>
       </Card.Body>

@@ -3,8 +3,7 @@ import { Container, Form, FormControl } from "react-bootstrap";
 import { getProducts } from "../services/api";
 import SearchItem from "./searchItem";
 
-const Search = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+const Search = ({ searchTerm, handleSearch }) => {
   const [products, setProducts] = useState([]);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const searchFormRef = useRef(null);
@@ -15,10 +14,6 @@ const Search = () => {
       .then((data) => setProducts(data))
       .catch((error) => console.error("Error fetching products:", error));
   }, []);
-
-  const handleSearch = (term) => {
-    setSearchTerm(term);
-  };
 
   const searchResults = products.filter((product) =>
     product.title.toLowerCase().includes(searchTerm.toLowerCase())

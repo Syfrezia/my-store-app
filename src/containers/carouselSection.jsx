@@ -87,7 +87,7 @@ const CarouselSection = () => {
     <Container
       fluid
       data-bs-theme="dark"
-      className="d-flex flex-column align-items-center px-2 pb-3 bg-success text-light"
+      className="d-flex flex-column align-items-center px-5 pb-4 bg-success text-light"
     >
       <Row style={{ width: "100%" }}>
         <Col className="d-flex justify-content-center">

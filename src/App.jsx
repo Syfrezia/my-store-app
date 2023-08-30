@@ -17,7 +17,7 @@ function App() {
 
   return (
     <Router>
-      <Header onSearch={handleSearch} />
+      <Header searchTerm={searchTerm} handleSearch={handleSearch} />
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route path="/product/:productId" element={<ProductPage />} />

@@ -42,7 +42,8 @@ const CategoryPage = () => {
   };
 
   const displayCategory =
-    categories.find((category) => category.name === selectedCategory)?.title || "All";
+    categories.find((category) => category.name === selectedCategory)?.title ||
+    "All";
 
   const isMobile = useMediaQuery({ maxWidth: 991 });
 
@@ -74,11 +75,10 @@ const CategoryPage = () => {
             style={
               isMobile
                 ? {
-                    width: "25rem",
+                    width: "20rem",
                     display: "flex",
                     flexWrap: "wrap",
                     justifyContent: "center",
-                    gap: "1rem",
                   }
                 : { display: "flex", gap: "1rem" }
             }
@@ -91,7 +91,7 @@ const CategoryPage = () => {
                 name={category.name}
                 value={category.name}
                 checked={selectedCategory === category.name}
-                className="mx-2"
+                className="mx-1 my-1"
                 style={{
                   border: "2px solid #198754",
                   textTransform: "capitalize",

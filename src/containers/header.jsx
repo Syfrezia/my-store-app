@@ -4,7 +4,7 @@ import Search from "../components/search";
 import { FaShoppingCart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-const Header = ({ onSearch }) => {
+const Header = ({ searchTerm, handleSearch }) => {
   const isMobile = useMediaQuery({ maxWidth: 991 });
 
   const renderBrand = (
@@ -43,10 +43,10 @@ const Header = ({ onSearch }) => {
       className="px-lg-5 py-lg-2 m-0"
       style={{ boxSizing: "border-box" }}
     >
-      <Row className="p-0 m-0" style={{ width: "100%" }}>
+      <Row className=" px-3 py-0 m-0" style={{ width: "100%" }}>
         <Col md={3}>{renderBrand}</Col>
         <Col md={6} className="d-flex">
-          <Search onSearch={onSearch} />
+          <Search searchTerm={searchTerm} handleSearch={handleSearch} />
         </Col>
         <Col md={3} className="d-flex justify-content-end">
           {renderCategoriesButton}
@@ -73,7 +73,7 @@ const Header = ({ onSearch }) => {
       </Row>
       <Row className="p-0 m-0" style={{ width: "100%" }}>
         <Col className="d-flex justify-content-between px-0">
-          <Search onSearch={onSearch} />
+          <Search searchTerm={searchTerm} handleSearch={handleSearch} />
         </Col>
       </Row>
     </Container>
