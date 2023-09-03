@@ -18,7 +18,7 @@ const ProductCardX = ({ item }) => {
         src={item.image}
         height={120}
         className="p-1"
-        style={{ width:"140px", objectFit: "contain" }}
+        style={{ objectFit: "contain", minWidth: "140px", maxWidth: "140px" }}
       />
       <Card.Body style={{ padding: "1rem 1rem" }}>
         <Card.Title

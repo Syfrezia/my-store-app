@@ -1,5 +1,5 @@
-import CarouselSection from "../containers/carouselSection";
-import Recommendation from "../containers/recommendation";
+import CarouselSection from "../containers/CarouselSection";
+import Recommendation from "../containers/Recommendation";
 
 const Home = () => {
   return (

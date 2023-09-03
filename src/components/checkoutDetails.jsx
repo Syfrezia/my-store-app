@@ -6,11 +6,11 @@ import { BsChatLeftText, BsHeart, BsShare } from "react-icons/bs";
 const CheckoutDetails = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
 
-  const handleQuantityAddition = () => {
+  const addQuantity = () => {
     setQuantity((quantity) => Math.min(quantity + 1, 20));
   };
 
-  const handleQuantitySubstraction = () => {
+  const minusQuantity = () => {
     setQuantity((quantity) => Math.max(quantity - 1, 1));
   };
 
@@ -20,9 +20,12 @@ const CheckoutDetails = ({ product }) => {
     if (!isNaN(numericValue)) {
       setQuantity(Math.min(Math.max(numericValue, 1), 20));
     } else {
-      setQuantity("1");
+      setQuantity(""); // Set quantity to empty string for invalid input
     }
   };
+
+  // Determine if quantity is not a valid number between 1 and 20
+  const isInvalidQuantity = isNaN(quantity) || quantity < 1 || quantity > 20;
 
   return (
     <div
@@ -34,15 +37,17 @@ const CheckoutDetails = ({ product }) => {
     >
       <div className="fs-5 fw-semibold mb-3">Checkout Details</div>
       <div
+        className="d-flex align-items-center"
         style={{
           border: "1px solid #198754",
           width: "fit-content",
+          height: "3rem",
           padding: "2px",
           borderRadius: "10px",
         }}
       >
-        <button onClick={handleQuantitySubstraction} className="minus-button">
-          <FaMinus style={{ fontSize: "0.7rem", color: "#198754" }} />
+        <button onClick={minusQuantity} className="minus-button">
+          <FaMinus style={{ fontSize: "1rem", color: "#198754" }} />
         </button>
         <input
           type="number"
@@ -50,10 +55,10 @@ const CheckoutDetails = ({ product }) => {
           max={20}
           value={quantity}
           onChange={handleInputChange}
-          style={{ textAlign: "center" }}
+          style={{ textAlign: "center", fontSize: "1.2rem" }}
         />
-        <button onClick={handleQuantityAddition} className="plus-button">
-          <FaPlus style={{ fontSize: "0.7rem", color: "#198754" }} />
+        <button onClick={addQuantity} className="plus-button">
+          <FaPlus style={{ fontSize: "1rem", color: "#198754" }} />
         </button>
       </div>
       <div className="mb-2">
@@ -65,15 +70,23 @@ const CheckoutDetails = ({ product }) => {
         style={{ width: "100%" }}
       >
         <span style={{ fontSize: "1.1rem", color: "#8e8e8e" }}>Subtotal</span>
-        <span className="fs-5 fw-bold">
+        <span className="fs-3 fw-bold">
           ${(product.price * quantity).toFixed(2)}
         </span>
       </div>
       <div className="mb-3" style={{ display: "grid", rowGap: "0.5rem" }}>
-        <Button variant="success">
+        <Button
+          variant="success"
+          className="fw-semibold"
+          disabled={isInvalidQuantity} // Disable the button if quantity is invalid
+        >
           Add to Cart
         </Button>
-        <Button variant="outline-success">
+        <Button
+          variant="outline-success"
+          className="fw-semibold"
+          disabled={isInvalidQuantity} // Disable the button if quantity is invalid
+        >
           Buy Now
         </Button>
       </div>

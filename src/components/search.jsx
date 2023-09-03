@@ -1,13 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 import { Container, Form, FormControl } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import { getProducts } from "../services/api";
-import SearchItem from "./searchItem";
+import SearchItem from "./SearchItem";
 
 const Search = ({ searchTerm, handleSearch }) => {
   const [products, setProducts] = useState([]);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const searchFormRef = useRef(null);
   const searchResultRef = useRef(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     getProducts()
@@ -21,9 +24,15 @@ const Search = ({ searchTerm, handleSearch }) => {
 
   const limitedResults = searchResults.slice(0, 5);
 
-  const searchFormWidth = searchFormRef.current?.offsetWidth || "60rem"; // Default width if ref not available
+  const searchFormWidth = searchFormRef.current?.offsetWidth || "60rem";
 
   const handleSearchItemClick = () => {
+    setIsSearchFocused(false);
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    navigate("/result");
     setIsSearchFocused(false);
   };
 
@@ -31,7 +40,7 @@ const Search = ({ searchTerm, handleSearch }) => {
     <Container fluid className="m-0 p-0">
       <Form
         className="d-flex justify-content-between"
-        onSubmit={(e) => e.preventDefault()}
+        onSubmit={handleSearchSubmit}
         style={{ flexGrow: "1" }}
         ref={searchFormRef}
       >
