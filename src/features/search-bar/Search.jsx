@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { Container, Form, FormControl } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { getProducts } from "../services/api";
+import { getProducts } from "../../services/api";
 import SearchItem from "./SearchItem";
 
-const Search = ({ searchTerm, handleSearch }) => {
+const Search = ({ searchTerm, handleSearch, setIsOverlayOpen }) => {
   const [products, setProducts] = useState([]);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const searchFormRef = useRef(null);
@@ -37,7 +37,7 @@ const Search = ({ searchTerm, handleSearch }) => {
   };
 
   return (
-    <Container fluid className="m-0 p-0">
+    <Container fluid className="m-0 p-0" style={{ zIndex: 2 }}>
       <Form
         className="d-flex justify-content-between"
         onSubmit={handleSearchSubmit}
@@ -49,11 +49,15 @@ const Search = ({ searchTerm, handleSearch }) => {
           placeholder="Search FakeStore"
           value={searchTerm}
           onChange={(e) => handleSearch(e.target.value)}
-          onFocus={() => setIsSearchFocused(true)}
+          onFocus={() => {
+            setIsSearchFocused(true);
+            setIsOverlayOpen(true);
+          }}
           onBlur={() => {
             setTimeout(() => {
               if (!searchResultRef.current?.contains(document.activeElement)) {
                 setIsSearchFocused(false);
+                setIsOverlayOpen(false);
               }
             }, 0);
           }}
@@ -64,23 +68,11 @@ const Search = ({ searchTerm, handleSearch }) => {
       {isSearchFocused && (
         <>
           <div
-            className="overlay"
-            style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              width: "100vw",
-              height: "100vh",
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-              zIndex: -1,
-            }}
-          ></div>
-          <div
             className="search-result bg-light px-3 py-3 rounded-3"
             style={{
               position: "fixed",
               width: searchFormWidth,
-              zIndex: 10,
+              zIndex: 2,
             }}
             ref={searchResultRef}
           >

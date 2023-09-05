@@ -40,7 +40,7 @@ input[type="number"] {
 .plus-button:hover {
   outline: none;
   border: none;
-  background-color: #efefef;
+  background-color: transparent;
   border-radius: 0.5rem;
 }
 

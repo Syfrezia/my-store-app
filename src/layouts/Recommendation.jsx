@@ -47,7 +47,7 @@ const Recommendation = () => {
         fluid
         className="fw-semibold fs-3 my-3 d-flex justify-content-center"
       >
-        <h2>Top Sellers</h2>
+        <h2>Catalogue</h2>
       </Container>
       <Container className="d-flex justify-content-between">
         <Row>{categories.map((category) => generateCard(category))}</Row>

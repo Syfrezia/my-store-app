@@ -1,9 +1,9 @@
 import React from "react";
 
-const FilterOverlay = ({ handleFilter }) => {
+const FilterOverlay = ({ overlayZindex, toggleCart }) => {
   return (
     <div
-      onClick={handleFilter}
+    onClick={toggleCart}
       className="overlay"
       style={{
         position: "fixed",
@@ -12,7 +12,7 @@ const FilterOverlay = ({ handleFilter }) => {
         width: "100vw",
         height: "100vh",
         backgroundColor: "rgba(0, 0, 0, 0.5)",
-        zIndex: 2,
+        zIndex: overlayZindex,
       }}
     ></div>
   );

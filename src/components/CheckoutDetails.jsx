@@ -16,21 +16,46 @@ const CheckoutDetails = ({ product }) => {
 
   const handleInputChange = (event) => {
     const numericValue = event.target.valueAsNumber;
-
     if (!isNaN(numericValue)) {
       setQuantity(Math.min(Math.max(numericValue, 1), 20));
     } else {
-      setQuantity(""); // Set quantity to empty string for invalid input
+      setQuantity("");
     }
   };
 
-  // Determine if quantity is not a valid number between 1 and 20
   const isInvalidQuantity = isNaN(quantity) || quantity < 1 || quantity > 20;
+
+  const footerButtons = [
+    {
+      class: "clear-button me-1",
+      element: <BsChatLeftText />,
+      style: {},
+      spanText: "Chat",
+      spanClass: "ms-2 fw-semibold",
+    },
+    {
+      class: "clear-button px-2",
+      element: <BsHeart />,
+      style: {
+        borderLeft: "2px solid #e1e1e1",
+        borderRight: "2px solid #e1e1e1",
+      },
+      spanText: "Wishlist",
+      spanClass: "ms-2 fw-semibold",
+    },
+    {
+      class: "clear-button ms-1",
+      element: <BsShare />,
+      style: {},
+      spanText: "Share",
+      spanClass: "ms-2 fw-semibold",
+    },
+  ];
 
   return (
     <div
       style={{
-        border: "1px solid #198754",
+        border: "2px solid #198754",
         borderRadius: "0.5rem",
         padding: "1rem",
       }}
@@ -39,7 +64,7 @@ const CheckoutDetails = ({ product }) => {
       <div
         className="d-flex align-items-center"
         style={{
-          border: "1px solid #198754",
+          border: "2px solid #198754",
           width: "fit-content",
           height: "3rem",
           padding: "2px",
@@ -78,14 +103,14 @@ const CheckoutDetails = ({ product }) => {
         <Button
           variant="success"
           className="fw-semibold"
-          disabled={isInvalidQuantity} // Disable the button if quantity is invalid
+          disabled={isInvalidQuantity}
         >
           Add to Cart
         </Button>
         <Button
           variant="outline-success"
           className="fw-semibold"
-          disabled={isInvalidQuantity} // Disable the button if quantity is invalid
+          disabled={isInvalidQuantity}
         >
           Buy Now
         </Button>
@@ -94,30 +119,12 @@ const CheckoutDetails = ({ product }) => {
         className="d-flex justify-content-center"
         style={{ fontSize: "0.8rem" }}
       >
-        <button className="clear-button me-1">
-          <span>
-            <BsChatLeftText />
-          </span>
-          <span className="ms-2 fw-semibold">Chat</span>
-        </button>
-        <button
-          className="clear-button px-2"
-          style={{
-            borderLeft: "2px solid #e1e1e1",
-            borderRight: "2px solid #e1e1e1",
-          }}
-        >
-          <span>
-            <BsHeart />
-          </span>
-          <span className="ms-2 fw-semibold">Wishlist</span>
-        </button>
-        <button className="clear-button ms-1">
-          <span>
-            <BsShare />
-          </span>
-          <span className="ms-2 fw-semibold">Share</span>
-        </button>
+        {footerButtons.map((button) => (
+          <button className={button.class} style={button.style} key={button.spanText}>
+            <span>{button.element}</span>
+            <span className={button.spanClass}>{button.spanText}</span>
+          </button>
+        ))}
       </div>
     </div>
   );
