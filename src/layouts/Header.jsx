@@ -6,18 +6,21 @@ import { Link } from "react-router-dom";
 import Search from "../features/search-bar/Search";
 import Cart from "../features/cart-component/Cart";
 import FilterOverlay from "../components/FilterOverlay";
+import { useCart } from "../contexts/CartProvider";
 
-const Header = ({ searchTerm, handleSearch }) => {
+const Header = () => {
   const isMobile = useMediaQuery({ maxWidth: 991 });
 
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
   const [overlayZindex, setOverlayZindex] = useState(1);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
+  const { calculateTotalQuantity } = useCart();
+
   const toggleCart = () => {
     isCartOpen ? setIsOverlayOpen(false) : setIsOverlayOpen(true);
-    overlayZindex === 1 ? setOverlayZindex(10) : setOverlayZindex(1);
-    setIsCartOpen(!isCartOpen);
+    setOverlayZindex((prev) => (prev === 1 ? 10 : 1));
+    setIsCartOpen((prev) => !prev);
   };
 
   const renderBrand = (
@@ -52,19 +55,21 @@ const Header = ({ searchTerm, handleSearch }) => {
       }}
     >
       <FaShoppingCart className="fs-3" />
-      <Badge
-        bg="danger"
-        className="rounded-pill"
-        style={{ scale: "0.8", position: "absolute", top: "0", right: "0" }}
-      >
-        0
-      </Badge>
+      {calculateTotalQuantity() > 0 && (
+        <Badge
+          bg="danger"
+          className="rounded-3"
+          style={{ position: "absolute", top: "0", right: "0" }}
+        >
+          {calculateTotalQuantity()}
+        </Badge>
+      )}
     </Button>
   );
 
   const renderDesktopHeader = (
     <>
-      <Cart isCartOpen={isCartOpen} />
+      <Cart isCartOpen={isCartOpen} toggleCart={toggleCart} />
       <Container
         fluid
         className="px-lg-5 py-lg-2 m-0"
@@ -75,11 +80,7 @@ const Header = ({ searchTerm, handleSearch }) => {
             {renderBrand}
           </Col>
           <Col lg={6} className="d-flex px-0">
-            <Search
-              searchTerm={searchTerm}
-              handleSearch={handleSearch}
-              setIsOverlayOpen={setIsOverlayOpen}
-            />
+            <Search setIsOverlayOpen={setIsOverlayOpen} />
           </Col>
           <Col lg={3} className="d-flex justify-content-end px-0">
             {renderCategoriesButton}
@@ -92,7 +93,7 @@ const Header = ({ searchTerm, handleSearch }) => {
 
   const renderMobileHeader = (
     <>
-      <Cart isCartOpen={isCartOpen} />
+      <Cart isCartOpen={isCartOpen} toggleCart={toggleCart} />
 
       <Container
         fluid
@@ -116,11 +117,7 @@ const Header = ({ searchTerm, handleSearch }) => {
             md={{ span: 10, offset: 1 }}
             className="d-flex justify-content-between px-0"
           >
-            <Search
-              searchTerm={searchTerm}
-              handleSearch={handleSearch}
-              setIsOverlayOpen={setIsOverlayOpen}
-            />
+            <Search setIsOverlayOpen={setIsOverlayOpen} />
           </Col>
         </Row>
       </Container>

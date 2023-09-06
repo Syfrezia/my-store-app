@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Row, Col, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
+import { aboutUs, quickLinks, connectWithUs } from "../constants";
 
 const Footer = () => {
   return (
@@ -9,23 +10,18 @@ const Footer = () => {
       <Container>
         <Row>
           <Col md={5} className="pe-lg-5">
-            <h4 style={{ color: "#004000" }}>About Us</h4>
-            <p>
-              We take pride in the relationships we've built with artisans,
-              manufacturers, and suppliers who share our commitment to quality.
-              Each product you find on our platform has been meticulously
-              selected to ensure that it meets our stringent standards.
-            </p>
+            <h4 style={{ color: "#004000" }}>{aboutUs.title}</h4>
+            <p>{aboutUs.content}</p>
           </Col>
           <Col md={3} className="my-3 my-md-0">
-            <h4 style={{ color: "#004000" }}>Quick Links</h4>
+            <h4 style={{ color: "#004000" }}>{quickLinks.title}</h4>
             <Nav className="flex-column">
               <Link
                 to={"/"}
                 className="mx-0 px-0 py-1 text-light"
                 style={{ textDecoration: "none" }}
               >
-                Home
+                {quickLinks.home}
               </Link>
               <Link
                 as={Link}
@@ -33,19 +29,19 @@ const Footer = () => {
                 className="mx-0 px-0 py-1 text-light"
                 style={{ textDecoration: "none" }}
               >
-                Products
+                {quickLinks.products}
               </Link>
               <Nav.Link href="#" className="mx-0 px-0 py-1 text-light">
-                About Us
+                {quickLinks.aboutUs}
               </Nav.Link>
               <Nav.Link href="#" className="mx-0 px-0 py-1 text-light">
-                Contact
+                {quickLinks.contact}
               </Nav.Link>
             </Nav>
           </Col>
           <Col md={4}>
-            <h4 style={{ color: "#004000" }}>Connect With Us</h4>
-            <p>Follow us on social media for the latest updates:</p>
+            <h4 style={{ color: "#004000" }}>{connectWithUs.title}</h4>
+            <p>{connectWithUs.content}</p>
             <div className="d-flex">
               <a href="#" className="me-3 text-light fs-3">
                 <FaFacebook />

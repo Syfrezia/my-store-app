@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { getProducts } from "../services/api";
+import { useSearch } from "../contexts/SearchProvider";
 import ProductCard from "../components/ProductCard";
 
-const ResultPage = ({ searchTerm }) => {
+const ResultPage = () => {
   const [products, setProducts] = useState([]);
+  const { searchTerm } = useSearch();
 
   useEffect(() => {
     getProducts()

@@ -8,7 +8,8 @@ const ProductCardX = ({ item }) => {
       to={`/product/${item.id}`}
       className="rounded-4 d-flex flex-row px-2"
       style={{
-        maxWidth: "25rem",
+        maxWidth: "90vw",
+        minWidth: "45vw",
         boxShadow: "0px 0px 10px #ccc",
         textDecoration: "none",
       }}

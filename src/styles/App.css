@@ -49,3 +49,27 @@ input[type="number"] {
   border: none;
   background-color: transparent;
 }
+
+@keyframes slideInRight {
+  0% {
+    transform: translateX(100vw);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+.slide-in-right {
+  animation: slideInRight 0.3s ease-in-out forwards;
+}
+
+@keyframes slideInBottom {
+  0% {
+    transform: translateY(100vh);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+.slide-in-bottom {
+  animation: slideInBottom 0.3s ease-in-out forwards;
+}

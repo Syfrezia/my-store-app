@@ -1,27 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
-import { getProductsByIds } from "../../services/api";
+import React, { useState } from "react";
+import { Container, Row, Col, Button, CloseButton } from "react-bootstrap";
+import { useMediaQuery } from "react-responsive";
 import CartItem from "./CartItem";
+import { useCart } from "../../contexts/CartProvider";
+import { emptyCart } from "../../assets/images";
 
-const Cart = ({ isCartOpen }) => {
+const Cart = ({ isCartOpen, toggleCart }) => {
   const [cartHeight, setCartHeight] = useState("15.5rem");
-  const [productData, setProductData] = useState([]); // State to store product data
   const [isInvalidQuantity, setIsInvalidQuantity] = useState(false);
 
-  useEffect(() => {
-    const productIds = [9, 10, 11, 12, 13, 14];
-    getProductsByIds(productIds)
-      .then((products) => {
-        // Initialize productData with initial quantity and checked status
-        const initialProductData = products.map((product) => ({
-          ...product,
-          quantity: 1, // Initial quantity
-          checked: false, // Initial checked status
-        }));
-        setProductData(initialProductData);
-      })
-      .catch((error) => console.error("Error fetching products:", error));
-  }, []);
+  const { cart, calculateTotalQuantityChecked } = useCart();
+
+  const isDesktop = useMediaQuery({ minWidth: 992 });
 
   const handleCartHeight = () => {
     setCartHeight((prevHeight) =>
@@ -29,43 +19,10 @@ const Cart = ({ isCartOpen }) => {
     );
   };
 
-  // Handle checkbox change and update the checked items state
-  const handleCheckboxChange = (productId) => {
-    setProductData((prevProductData) =>
-      prevProductData.map((product) =>
-        product.id === productId
-          ? { ...product, checked: !product.checked }
-          : product
-      )
-    );
-  };
-
-  // Calculate total quantity of checked items
-  const calculateTotalQuantity = () => {
-    let totalQuantity = 0;
-    productData.forEach((product) => {
-      if (product.checked === true) {
-        totalQuantity += product.quantity;
-      }
-    });
-    return totalQuantity;
-  };
-
-  // Update quantity in productData
-  const updateQuantity = (productId, newQuantity) => {
-    setProductData((prevProductData) =>
-      prevProductData.map((product) =>
-        product.id === productId
-          ? { ...product, quantity: newQuantity }
-          : product
-      )
-    );
-  };
-
   // Calculate total price based on quantity and price of each product
   const calculateTotalPrice = () => {
     let totalPrice = 0;
-    productData.forEach((product) => {
+    cart.forEach((product) => {
       if (product.checked) {
         totalPrice += product.quantity * product.price;
       }
@@ -73,7 +30,7 @@ const Cart = ({ isCartOpen }) => {
     return totalPrice.toFixed(2);
   };
 
-  const cartStyles = {
+  const cartStylesMobile = {
     position: "fixed",
     bottom: "0",
     zIndex: 11,
@@ -84,8 +41,55 @@ const Cart = ({ isCartOpen }) => {
     transition: "height 0.3s ease-in-out",
   };
 
+  const cartStylesDesktop = {
+    position: "fixed",
+    right: "0",
+    top: "0",
+    zIndex: 11,
+    minWidth: "25vw",
+    maxWidth: "40vw",
+    height: "100vh",
+    backgroundColor: "#fefefe",
+    borderRadius: "1rem 0 0 1rem",
+    boxSizing: "border-box",
+  };
+
+  const cartMain = (
+    <Col className="py-0 px-1">
+      {cart.map((product) => (
+        <CartItem
+          key={product.id}
+          product={product}
+          quantity={product.quantity}
+          setIsInvalidQuantity={setIsInvalidQuantity}
+        />
+      ))}
+    </Col>
+  );
+
+  const emptyCartPlaceholder = (
+    <Col className="d-flex flex-column justify-content-center align-items-center">
+      <img src={emptyCart} alt="empty cart image" width={250} />
+      <h4
+        className="my-3"
+        style={{
+          textAlign: "center",
+          color: "#198754",
+        }}
+      >
+        Looks like your shopping cart is empty
+      </h4>
+      <Button
+        onClick={toggleCart}
+        variant="outline-success"
+        className="fw-semibold"
+      >
+        Continue Browsing
+      </Button>
+    </Col>
+  );
+
   const CartFooter = () => {
-    const totalQuantity = calculateTotalQuantity(); // Calculate total quantity
     const totalPrice = calculateTotalPrice(); // Calculate total price
 
     return (
@@ -107,71 +111,90 @@ const Cart = ({ isCartOpen }) => {
         >
           <Button
             variant="success"
-            disabled={isInvalidQuantity}
+            disabled={
+              calculateTotalQuantityChecked() === 0 || isInvalidQuantity
+            }
             className="m-0"
             style={{ height: "3rem", flex: "1" }}
           >
-            Buy ({totalQuantity})
+            Buy ({calculateTotalQuantityChecked()})
           </Button>
         </Col>
       </Row>
     );
   };
 
-  return (
-    <>
-      {isCartOpen && (
-        <Container
-          fluid
-          className="d-flex justify-content-center px-2 bg-light"
-          style={cartStyles}
-        >
-          <Row
-            onMouseDown={handleCartHeight}
-            className="d-flex justify-content-center mt-3"
-            style={{ width: "100%", height: "1rem" }}
-          >
-            <div
-              className="rounded-pill"
-              style={{
-                backgroundColor: "#9f9f9f",
-                width: "10rem",
-                height: "0.3rem",
-                cursor: "pointer",
-              }}
-            ></div>
-          </Row>
-          <Row
-            className="px-0 py-2 rounded-3"
-            style={{
-              transition: "height 0.3s ease-in-out",
-              height: cartHeight === "15.5rem" ? "55%" : "77.5%",
-              width: "100%",
-              overflowY: "scroll",
-              scrollSnapType: "y mandatory",
-              backgroundColor: "#fefefe",
-            }}
-          >
-            <Col className="py-0 px-1">
-              <div>
-                {productData.map((product) => (
-                  <CartItem
-                    key={product.id}
-                    product={product}
-                    quantity={product.quantity}
-                    setIsInvalidQuantity={setIsInvalidQuantity}
-                    onCheckboxChange={handleCheckboxChange}
-                    updateQuantity={updateQuantity}
-                  />
-                ))}
-              </div>
-            </Col>
-          </Row>
-          <CartFooter />
-        </Container>
-      )}
-    </>
+  const cartMobile = (
+    <Container
+      fluid
+      className={`${
+        isCartOpen ? "slide-in-bottom" : ""
+      } d-flex justify-content-center px-2 bg-light`}
+      style={cartStylesMobile}
+    >
+      <Row
+        onMouseDown={handleCartHeight}
+        className="d-flex justify-content-center mt-3"
+        style={{ width: "100%", height: "1rem" }}
+      >
+        <div
+          className="rounded-pill"
+          style={{
+            backgroundColor: "#9f9f9f",
+            width: "10rem",
+            height: "0.3rem",
+            cursor: "pointer",
+          }}
+        ></div>
+      </Row>
+      <Row
+        className="px-0 py-2 rounded-3"
+        style={{
+          transition: "height 0.3s ease-in-out",
+          height: cartHeight === "15.5rem" ? "55%" : "77.5%",
+          width: "100%",
+          overflowY: "scroll",
+          scrollSnapType: "y mandatory",
+          backgroundColor: "#fefefe",
+        }}
+      >
+        {cart.length === 0 ? emptyCartPlaceholder : cartMain}
+      </Row>
+      <CartFooter />
+    </Container>
   );
+
+  const cartDesktop = (
+    <Container
+      fluid
+      className={`${
+        isCartOpen ? "slide-in-right" : ""
+      } d-flex flex-column justify-content-center px-2 bg-light`}
+      style={cartStylesDesktop}
+    >
+      <Row className="my-3" style={{ width: "95%" }}>
+        <Col className="d-flex justify-content-between align-items-center">
+          <span className="fs-4 fw-semibold">Your Shopping Cart:</span>
+          <CloseButton onClick={toggleCart} />
+        </Col>
+      </Row>
+      <Row
+        className="px-0 py-2 rounded-3 mb-3"
+        style={{
+          height: "75%",
+          width: "90%",
+          overflowY: "scroll",
+          scrollSnapType: "y mandatory",
+          backgroundColor: "#fefefe",
+        }}
+      >
+        {cart.length === 0 ? emptyCartPlaceholder : cartMain}
+      </Row>
+      <CartFooter />
+    </Container>
+  );
+
+  return isCartOpen ? (isDesktop ? cartDesktop : cartMobile) : null;
 };
 
 export default Cart;

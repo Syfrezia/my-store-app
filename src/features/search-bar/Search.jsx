@@ -2,13 +2,15 @@ import { useState, useEffect, useRef } from "react";
 import { Container, Form, FormControl } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { getProducts } from "../../services/api";
+import { useSearch } from "../../contexts/SearchProvider";
 import SearchItem from "./SearchItem";
 
-const Search = ({ searchTerm, handleSearch, setIsOverlayOpen }) => {
+const Search = ({ setIsOverlayOpen }) => {
   const [products, setProducts] = useState([]);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const searchFormRef = useRef(null);
   const searchResultRef = useRef(null);
+  const { searchTerm, handleSearch } = useSearch();
 
   const navigate = useNavigate();
 
@@ -28,12 +30,14 @@ const Search = ({ searchTerm, handleSearch, setIsOverlayOpen }) => {
 
   const handleSearchItemClick = () => {
     setIsSearchFocused(false);
+    setIsOverlayOpen(false);
   };
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     navigate("/result");
     setIsSearchFocused(false);
+    setIsOverlayOpen(false);
   };
 
   return (
@@ -78,7 +82,7 @@ const Search = ({ searchTerm, handleSearch, setIsOverlayOpen }) => {
           >
             {limitedResults.map((product) => (
               <div
-                className="py-lg-2"
+                className="py-1 py-lg-2"
                 style={{ borderBottom: "1px solid grey" }}
                 key={product.id}
               >

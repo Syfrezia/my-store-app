@@ -4,18 +4,7 @@ import { useMediaQuery } from "react-responsive";
 import { Link, useLocation } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 import { getProducts } from "../services/api";
-
-const categories = [
-  { title: "All", path: "all", name: "" },
-  { title: "Electronics", path: "electronics", name: "electronics" },
-  { title: "Jewelery", path: "jewelery", name: "jewelery" },
-  { title: "Men's Clothing", path: "mens-clothing", name: "men's clothing" },
-  {
-    title: "Women's Clothing",
-    path: "womens-clothing",
-    name: "women's clothing",
-  },
-];
+import { categories } from "../constants";
 
 const CategoryPage = () => {
   const [products, setProducts] = useState([]);

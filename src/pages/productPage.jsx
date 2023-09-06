@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Badge } from "react-bootstrap";
 import { getProductById, getProductsByCategory } from "../services/api";
 import { useMediaQuery } from "react-responsive";
-import CustomBreadcrumb from "../components/CustomBreadcrumb";
-import CheckoutDetails from "../components/CheckoutDetails";
-import ProductCard from "../components/ProductCard";
-import ProductCardX from "../components/ProductCardX";
+import {
+  CustomBreadcrumb,
+  CheckoutDetails,
+  ProductCard,
+  ProductCardX,
+} from "../components";
 
 const ProductPage = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
   const [similarProducts, setSimilarProducts] = useState([]);
 
-  const isMobile = useMediaQuery({ maxWidth: 768 });
+  const isMobile = useMediaQuery({ maxWidth: 576 });
 
   const isTablet = useMediaQuery({ maxWidth: 991 });
 
@@ -57,36 +59,73 @@ const ProductPage = () => {
 
   const ProductSection = () => {
     return (
-      <Row
-        className="px-lg-1 px-xl-3 mx-0 my-5"
-        style={{ width: "100%", boxShadow: "border-box" }}
-      >
-        <Col md={12} lg={{ span: 3, offset: 1 }}>
-          <div className="d-flex justify-content-center align-items-center p-2 rounded-3">
-            <img
-              src={product.image}
-              alt={product.title}
-              width={300}
-              height={300}
-              style={{ objectFit: "contain" }}
-            />
-          </div>
-        </Col>
-        <Col md={12} lg={4} className="mt-5 mt-lg-0 mx-lg-4">
-          <div className="pb-3" style={{ borderBottom: "1px solid #8e8e8e" }}>
-            <h1 className="fs-5">{product.title}</h1>
-            <div className="fs-2 fw-bold">${product.price}</div>
-            <div>Category: {product.category}</div>
-          </div>
-          <div>
-            <div className="py-2 fw-bold">About this item:</div>
-            <div>{product.description}</div>
-          </div>
-        </Col>
-        <Col md={12} lg={3} className="mt-5 mt-lg-0">
-          <CheckoutDetails product={product} />
-        </Col>
-      </Row>
+      <>
+        <Row
+          className="my-3"
+          style={{
+            width: "90%",
+            margin: "0 auto",
+            borderBottom: "1px solid #8e8e8e",
+          }}
+        >
+          <Col lg={{ span: 7, offset: 1 }}>
+            <div className="pb-3">
+              <h1 className="fs-3">{product.title}</h1>
+
+              <div className="fs-4">Category: {product.category}</div>
+            </div>
+          </Col>
+          <Col
+            lg={3}
+            className="d-flex flex-column justify-content-between pb-3"
+          >
+            <a href="#checkout-options">
+              <Badge
+                bg="success"
+                className="fs-2 fw-bold mb-3"
+                style={{ width: "fit-content" }}
+              >
+                ${product.price}
+              </Badge>
+            </a>
+
+            <div className="fs-5">
+              Stock: <span className="fw-semibold">20</span>
+            </div>
+          </Col>
+        </Row>
+        <Row
+          className="px-lg-1 px-xl-3 mx-0 my-3 d-flex justify-content-center align-items-center"
+          style={{
+            width: "100%",
+            boxShadow: "border-box",
+          }}
+        >
+          <Col md={12} lg={5}>
+            <div className="d-flex justify-content-center align-items-center p-2 rounded-3">
+              <img
+                src={product.image}
+                alt={product.title}
+                width={isMobile ? 250 : 400}
+                height={isMobile ? 250 : 400}
+                style={{ objectFit: "contain" }}
+              />
+            </div>
+          </Col>
+          <Col
+            md={12}
+            lg={5}
+            id="checkout-options"
+            className="mt-5 mt-lg-0 mx-lg-4"
+          >
+            <div className="mb-5">
+              <div className="py-2 fw-bold">About this item:</div>
+              <div>{product.description}</div>
+            </div>
+            <CheckoutDetails product={product} />
+          </Col>
+        </Row>
+      </>
     );
   };
 

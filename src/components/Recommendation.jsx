@@ -1,16 +1,6 @@
 import { Card, Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import electronics from "../assets/images/electronics.jpg";
-import jewelery from "../assets/images/jewelery.jpg";
-import menClothing from "../assets/images/men's clothing.jpg";
-import womenClothing from "../assets/images/women's clothing.jpg";
-
-const categories = [
-  { title: "Men's Fashion", image: menClothing, path: "mens-clothing" },
-  { title: "Women's Fashion", image: womenClothing, path: "womens-clothing" },
-  { title: "Electronics", image: electronics, path: "electronics" },
-  { title: "Jewelery", image: jewelery, path: "jewelery" },
-];
+import { catalogues } from "../constants";
 
 const Recommendation = () => {
   const generateCard = (category) => (
@@ -50,7 +40,7 @@ const Recommendation = () => {
         <h2>Catalogue</h2>
       </Container>
       <Container className="d-flex justify-content-between">
-        <Row>{categories.map((category) => generateCard(category))}</Row>
+        <Row>{catalogues.map((category) => generateCard(category))}</Row>
       </Container>
     </>
   );

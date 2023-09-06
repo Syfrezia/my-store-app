@@ -1,29 +1,26 @@
 import { useState } from "react";
 import { Button } from "react-bootstrap";
-import { FaMinus, FaPlus } from "react-icons/fa";
 import { BsChatLeftText, BsHeart, BsShare } from "react-icons/bs";
+import { useCart } from "../contexts/CartProvider";
+import FloatingAlert from "./FloatingAlert";
 
 const CheckoutDetails = ({ product }) => {
-  const [quantity, setQuantity] = useState(1);
+  const [showAlert, setShowAlert] = useState(false);
 
-  const addQuantity = () => {
-    setQuantity((quantity) => Math.min(quantity + 1, 20));
+  const { addToCart } = useCart(); // Access the cart context
+
+  const handleAddToCart = () => {
+    addToCart(product);
+    setShowAlert(true);
+
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 2000); // 2000 milliseconds (2 seconds)
   };
 
-  const minusQuantity = () => {
-    setQuantity((quantity) => Math.max(quantity - 1, 1));
+  const closeAlert = () => {
+    setShowAlert(false);
   };
-
-  const handleInputChange = (event) => {
-    const numericValue = event.target.valueAsNumber;
-    if (!isNaN(numericValue)) {
-      setQuantity(Math.min(Math.max(numericValue, 1), 20));
-    } else {
-      setQuantity("");
-    }
-  };
-
-  const isInvalidQuantity = isNaN(quantity) || quantity < 1 || quantity > 20;
 
   const footerButtons = [
     {
@@ -53,65 +50,28 @@ const CheckoutDetails = ({ product }) => {
   ];
 
   return (
-    <div
+    <section
       style={{
         border: "2px solid #198754",
         borderRadius: "0.5rem",
         padding: "1rem",
+        position: "relative",
       }}
     >
-      <div className="fs-5 fw-semibold mb-3">Checkout Details</div>
-      <div
-        className="d-flex align-items-center"
-        style={{
-          border: "2px solid #198754",
-          width: "fit-content",
-          height: "3rem",
-          padding: "2px",
-          borderRadius: "10px",
-        }}
-      >
-        <button onClick={minusQuantity} className="minus-button">
-          <FaMinus style={{ fontSize: "1rem", color: "#198754" }} />
-        </button>
-        <input
-          type="number"
-          min={1}
-          max={20}
-          value={quantity}
-          onChange={handleInputChange}
-          style={{ textAlign: "center", fontSize: "1.2rem" }}
-        />
-        <button onClick={addQuantity} className="plus-button">
-          <FaPlus style={{ fontSize: "1rem", color: "#198754" }} />
-        </button>
-      </div>
-      <div className="mb-2">
-        <span>Stock: </span>
-        <span className="fw-bold">20</span>
-      </div>
-      <div
-        className="d-flex justify-content-between align-items-end mb-3"
-        style={{ width: "100%" }}
-      >
-        <span style={{ fontSize: "1.1rem", color: "#8e8e8e" }}>Subtotal</span>
-        <span className="fs-3 fw-bold">
-          ${(product.price * quantity).toFixed(2)}
-        </span>
-      </div>
+      {showAlert && (
+        <FloatingAlert message="Product added to cart!" onClose={closeAlert} />
+      )}
+      <div className="fs-5 fw-semibold mb-3">Checkout Options</div>
       <div className="mb-3" style={{ display: "grid", rowGap: "0.5rem" }}>
         <Button
+          onClick={handleAddToCart}
           variant="success"
           className="fw-semibold"
-          disabled={isInvalidQuantity}
+          sticky="bottom"
         >
           Add to Cart
         </Button>
-        <Button
-          variant="outline-success"
-          className="fw-semibold"
-          disabled={isInvalidQuantity}
-        >
+        <Button variant="outline-success" className="fw-semibold">
           Buy Now
         </Button>
       </div>
@@ -120,13 +80,17 @@ const CheckoutDetails = ({ product }) => {
         style={{ fontSize: "0.8rem" }}
       >
         {footerButtons.map((button) => (
-          <button className={button.class} style={button.style} key={button.spanText}>
+          <button
+            className={button.class}
+            style={button.style}
+            key={button.spanText}
+          >
             <span>{button.element}</span>
             <span className={button.spanClass}>{button.spanText}</span>
           </button>
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 

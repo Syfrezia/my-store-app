@@ -2,16 +2,21 @@ import { useState } from "react";
 import { Button } from "react-bootstrap";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { FaRegTrashAlt } from "react-icons/fa";
+import { useCart } from "../../contexts/CartProvider";
 
-const CartItem = ({
-  product,
-  quantity,
-  setIsInvalidQuantity,
-  onCheckboxChange,
-  updateQuantity,
-}) => {
-  const { id, title, image, price, checked } = product;
+const CartItem = ({ product, quantity, setIsInvalidQuantity }) => {
+  const { id, title, image, price } = product;
   const [localQuantity, setLocalQuantity] = useState(quantity);
+
+  const {
+    removeFromCart,
+    updateQuantity,
+    toggleProductCheck,
+    isProductChecked,
+  } = useCart();
+
+  // Determine if the product is checked
+  const isChecked = isProductChecked(product.id);
 
   const addQuantity = () => {
     if (localQuantity < 20) {
@@ -51,8 +56,8 @@ const CartItem = ({
     }
   };
 
-  const handleCheckboxChange = () => {
-    onCheckboxChange(id, !checked);
+  const handleRemoveFromCart = () => {
+    removeFromCart(id); // Pass the product's id to removeFromCart
   };
 
   return (
@@ -71,8 +76,8 @@ const CartItem = ({
         <span className="d-flex align-items-center">
           <input
             type="checkbox"
-            checked={checked}
-            onChange={handleCheckboxChange}
+            checked={isChecked}
+            onChange={() => toggleProductCheck(product.id)}
             style={{ width: "1.5rem", height: "1.5rem" }}
           />
         </span>
@@ -91,7 +96,7 @@ const CartItem = ({
         <span className="d-flex flex-column justify-content-center">
           <div
             style={{
-              width: "50vw",
+              width: "90%",
               overflow: "hidden",
               whiteSpace: "nowrap",
               textOverflow: "ellipsis",
@@ -101,6 +106,9 @@ const CartItem = ({
           </div>
           <div className="fw-semibold">
             ${(price * localQuantity).toFixed(2)}
+          </div>
+          <div className="text-secondary" style={{ fontSize: "0.8rem" }}>
+            Stock: 20
           </div>
         </span>
       </div>
@@ -118,13 +126,17 @@ const CartItem = ({
           className="d-flex justify-content-between"
           style={{ width: "10rem" }}
         >
-          <Button className="p-0 fs-5 d-flex align-items-center" variant="Link">
+          <Button
+            onClick={handleRemoveFromCart}
+            className="p-0 fs-5 d-flex align-items-center"
+            variant="Link"
+          >
             <FaRegTrashAlt />
           </Button>
           <div
             className="d-flex align-items-center"
             style={{
-              border: "1px solid #198754",
+              border: "2px solid #198754",
               width: "fit-content",
               height: "2rem",
               padding: "2px",

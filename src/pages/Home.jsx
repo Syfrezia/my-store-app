@@ -1,5 +1,4 @@
-import CarouselSection from "../layouts/CarouselSection";
-import Recommendation from "../layouts/Recommendation";
+import { CarouselSection, Recommendation } from "../components";
 
 const Home = () => {
   return (

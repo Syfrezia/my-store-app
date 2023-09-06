@@ -1,49 +1,27 @@
-import { useState, useEffect } from "react";
-import Home from "./pages/Home";
-import ProductPage from "./pages/ProductPage";
-import CategoryPage from "./pages/CategoryPage";
-import ResultPage from "./pages/ResultPage";
-import Header from "./layouts/Header";
-import Footer from "./layouts/Footer";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useLocation,
-} from "react-router-dom";
+import { Home, CategoryPage, ProductPage, ResultPage } from "./pages";
+import { Header, Footer } from "./layouts";
+import ScrollToTop from "./utils/ScrollToTop";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import SearchProvider from "./contexts/SearchProvider";
+import { CartProvider } from "./contexts/CartProvider";
 import "./styles/App.css";
 
-function ScrollToTop() {
-  const location = useLocation();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location]);
-
-  return null;
-}
-
 function App() {
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const handleSearch = (term) => {
-    setSearchTerm(term);
-  };
-
   return (
     <Router>
-      <Header searchTerm={searchTerm} handleSearch={handleSearch} />
-      <ScrollToTop />
-      <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route path="/product/:productId" element={<ProductPage />} />
-        <Route path="/category/:category" element={<CategoryPage />} />
-        <Route
-          path="/result"
-          element={<ResultPage searchTerm={searchTerm} />}
-        />
-      </Routes>
-      <Footer />
+      <SearchProvider>
+        <CartProvider>
+          <Header />
+          <ScrollToTop />
+          <Routes>
+            <Route exact path="/" element={<Home />} />
+            <Route path="/product/:productId" element={<ProductPage />} />
+            <Route path="/category/:category" element={<CategoryPage />} />
+            <Route path="/result" element={<ResultPage />} />
+          </Routes>
+          <Footer />
+        </CartProvider>
+      </SearchProvider>
     </Router>
   );
 }
