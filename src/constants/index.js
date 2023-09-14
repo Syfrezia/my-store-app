@@ -42,3 +42,16 @@ export const connectWithUs = {
   title: "Connect With Us",
   content: "Follow us on social media for the latest updates:",
 };
+
+export const formValue = {
+  email: "example@email.com",
+  first: "John",
+  last: "Doe",
+  phone: "123-456-7890",
+  street: "123 Main Street",
+  detail: "Apt 4B",
+  city: "Jakarta",
+  country: "Indonesia",
+  postal: "10001",
+  notes: "Leave package by the door.",
+};

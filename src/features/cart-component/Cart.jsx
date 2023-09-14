@@ -4,6 +4,7 @@ import { useMediaQuery } from "react-responsive";
 import CartItem from "./CartItem";
 import { useCart } from "../../contexts/CartProvider";
 import { emptyCart } from "../../assets/images";
+import { Link } from "react-router-dom";
 
 const Cart = ({ isCartOpen, toggleCart }) => {
   const [cartHeight, setCartHeight] = useState("15.5rem");
@@ -19,7 +20,6 @@ const Cart = ({ isCartOpen, toggleCart }) => {
     );
   };
 
-  // Calculate total price based on quantity and price of each product
   const calculateTotalPrice = () => {
     let totalPrice = 0;
     cart.forEach((product) => {
@@ -71,9 +71,8 @@ const Cart = ({ isCartOpen, toggleCart }) => {
     <Col className="d-flex flex-column justify-content-center align-items-center">
       <img src={emptyCart} alt="empty cart image" width={250} />
       <h4
-        className="my-3"
+        className="my-3 text-center"
         style={{
-          textAlign: "center",
           color: "#198754",
         }}
       >
@@ -90,7 +89,7 @@ const Cart = ({ isCartOpen, toggleCart }) => {
   );
 
   const CartFooter = () => {
-    const totalPrice = calculateTotalPrice(); // Calculate total price
+    const totalPrice = calculateTotalPrice();
 
     return (
       <Row className="mb-2" style={{ height: "5rem", width: "100%" }}>
@@ -110,14 +109,21 @@ const Cart = ({ isCartOpen, toggleCart }) => {
           className="d-flex justify-content-center align-items-center"
         >
           <Button
+            onClick={toggleCart}
             variant="success"
             disabled={
               calculateTotalQuantityChecked() === 0 || isInvalidQuantity
             }
-            className="m-0"
+            className="m-0 p-0 d-flex"
             style={{ height: "3rem", flex: "1" }}
           >
-            Buy ({calculateTotalQuantityChecked()})
+            <Link
+              to="/checkout"
+              className="text-light d-grid align-items-center h-100 text-decoration-none"
+              style={{ flex: "1" }}
+            >
+              Buy ({calculateTotalQuantityChecked()})
+            </Link>
           </Button>
         </Col>
       </Row>

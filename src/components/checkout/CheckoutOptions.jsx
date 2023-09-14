@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { BsChatLeftText, BsHeart, BsShare } from "react-icons/bs";
-import { useCart } from "../contexts/CartProvider";
-import FloatingAlert from "./FloatingAlert";
+import { useCart } from "../../contexts/CartProvider";
+import FloatingAlert from "../common/FloatingAlert";
 
-const CheckoutDetails = ({ product }) => {
+const CheckoutOptions = ({ product }) => {
   const [showAlert, setShowAlert] = useState(false);
 
-  const { addToCart } = useCart(); // Access the cart context
+  const { addToCart } = useCart();
 
   const handleAddToCart = () => {
     addToCart(product);
@@ -15,11 +16,15 @@ const CheckoutDetails = ({ product }) => {
 
     setTimeout(() => {
       setShowAlert(false);
-    }, 2000); // 2000 milliseconds (2 seconds)
+    }, 2000);
   };
 
   const closeAlert = () => {
     setShowAlert(false);
+  };
+
+  const handleBuyNow = () => {
+    addToCart(product);
   };
 
   const footerButtons = [
@@ -71,7 +76,13 @@ const CheckoutDetails = ({ product }) => {
         >
           Add to Cart
         </Button>
-        <Button variant="outline-success" className="fw-semibold">
+        <Button
+          onClick={handleBuyNow}
+          as={Link}
+          to="/checkout"
+          variant="outline-success"
+          className="fw-semibold"
+        >
           Buy Now
         </Button>
       </div>
@@ -94,4 +105,4 @@ const CheckoutDetails = ({ product }) => {
   );
 };
 
-export default CheckoutDetails;
+export default CheckoutOptions;

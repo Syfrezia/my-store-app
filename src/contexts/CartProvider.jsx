@@ -24,7 +24,7 @@ export const CartProvider = ({ children }) => {
       const productWithProps = {
         ...product,
         quantity: 1, // Initial quantity
-        checked: false, // Initial checked status
+        checked: true, // Initial checked status
       };
       setCart([...cart, productWithProps]);
     }

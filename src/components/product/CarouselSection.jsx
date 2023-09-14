@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Carousel, Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
-import { getProductsByIds } from "../services/api";
+import { getProductsByIds } from "../../services/api";
 
 const CarouselSection = () => {
   const [products, setProducts] = useState([]);

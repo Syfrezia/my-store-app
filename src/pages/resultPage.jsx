@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { getProducts } from "../services/api";
 import { useSearch } from "../contexts/SearchProvider";
-import ProductCard from "../components/ProductCard";
+import ProductCard from "../components/product/ProductCard";
 
 const ResultPage = () => {
   const [products, setProducts] = useState([]);

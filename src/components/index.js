@@ -1,17 +1,37 @@
-import CarouselSection from "./CarouselSection";
-import Recommendation from "./Recommendation";
-import CheckoutDetails from "./CheckoutDetails";
-import CustomBreadcrumb from "./CustomBreadcrumb";
-import FilterOverlay from "./FilterOverlay";
-import ProductCard from "./ProductCard";
-import ProductCardX from "./ProductCardX";
+import CarouselSection from "./product/CarouselSection";
+import Recommendation from "./product/Recommendation";
+import CheckoutOptions from "./checkout/CheckoutOptions";
+import CustomBreadcrumb from "./common/CustomBreadcrumb";
+import FilterOverlay from "./filter/FilterOverlay";
+import ProductCard from "./product/ProductCard";
+import ProductCardX from "./product/ProductCardX";
+import OrderReview from "./checkout/OrderReview";
+import CheckoutEmptyList from "./checkout/CheckoutEmptyList";
+import CheckoutList from "./checkout/CheckoutList";
+import CheckoutItem from "./checkout/CheckoutItem";
+import ShippingForm from "./checkout/ShippingForm";
+import DeliveryOption from "./checkout/DeliveryOption";
+import GiftCodeButton from "./common/GiftCodeButton";
+import BackButton from "./common/BackButton";
+import CartButton from "./common/CartButton";
+import CategoriesButton from "./common/CategoriesButton";
 
 export {
   CarouselSection,
   Recommendation,
-  CheckoutDetails,
+  CheckoutOptions,
   CustomBreadcrumb,
   FilterOverlay,
   ProductCard,
   ProductCardX,
+  OrderReview,
+  CheckoutEmptyList,
+  CheckoutList,
+  CheckoutItem,
+  ShippingForm,
+  DeliveryOption,
+  GiftCodeButton,
+  BackButton,
+  CartButton,
+  CategoriesButton,
 };

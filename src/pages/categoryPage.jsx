@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Container, Row, Col, ToggleButton } from "react-bootstrap";
 import { useMediaQuery } from "react-responsive";
 import { Link, useLocation } from "react-router-dom";
-import ProductCard from "../components/ProductCard";
+import ProductCard from "../components/product/ProductCard";
 import { getProducts } from "../services/api";
 import { categories } from "../constants";
 

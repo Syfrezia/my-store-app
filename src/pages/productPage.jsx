@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Container, Row, Col, Badge } from "react-bootstrap";
+import { Container, Row, Col, Badge, Button } from "react-bootstrap";
 import { getProductById, getProductsByCategory } from "../services/api";
 import { useMediaQuery } from "react-responsive";
 import {
   CustomBreadcrumb,
-  CheckoutDetails,
+  CheckoutOptions,
   ProductCard,
   ProductCardX,
 } from "../components";
@@ -14,6 +14,11 @@ const ProductPage = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
   const [similarProducts, setSimilarProducts] = useState([]);
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const toggleDescription = () => {
+    setIsExpanded(!isExpanded);
+  };
 
   const isMobile = useMediaQuery({ maxWidth: 576 });
 
@@ -40,16 +45,12 @@ const ProductPage = () => {
   }, [product, productId]);
 
   if (!product) {
-    // You can display a loading state here while the product data is being fetched
     return <div>Loading...</div>;
   }
 
   const BreadcrumbSection = () => {
     return (
-      <Row
-        className="px-md-3 px-xl-5 mx-0 mt-3"
-        style={{ width: "100%", boxShadow: "border-box" }}
-      >
+      <Row className="px-md-3 px-xl-5 mx-0 mt-3 w-100">
         <Col>
           <CustomBreadcrumb productTitle={product.title} />
         </Col>
@@ -80,11 +81,7 @@ const ProductPage = () => {
             className="d-flex flex-column justify-content-between pb-3"
           >
             <a href="#checkout-options">
-              <Badge
-                bg="success"
-                className="fs-2 fw-bold mb-3"
-                style={{ width: "fit-content" }}
-              >
+              <Badge bg="success" className="fs-2 fw-bold mb-3">
                 ${product.price}
               </Badge>
             </a>
@@ -95,13 +92,12 @@ const ProductPage = () => {
           </Col>
         </Row>
         <Row
-          className="px-lg-1 px-xl-3 mx-0 my-3 d-flex justify-content-center align-items-center"
+          className="w-100 px-lg-1 px-xl-3 mx-0 my-3 d-flex justify-content-center align-items-center"
           style={{
-            width: "100%",
             boxShadow: "border-box",
           }}
         >
-          <Col md={12} lg={5}>
+          <Col md={12} lg={4}>
             <div className="d-flex justify-content-center align-items-center p-2 rounded-3">
               <img
                 src={product.image}
@@ -114,15 +110,30 @@ const ProductPage = () => {
           </Col>
           <Col
             md={12}
-            lg={5}
+            lg={6}
             id="checkout-options"
             className="mt-5 mt-lg-0 mx-lg-4"
           >
             <div className="mb-5">
               <div className="py-2 fw-bold">About this item:</div>
-              <div>{product.description}</div>
+              <div
+                className={`product-description ${
+                  isExpanded ? "expanded" : "collapsed"
+                }`}
+              >
+                {product.description}
+              </div>
+              {product.description.length > 81 && (
+                <Button
+                  variant="link"
+                  onClick={toggleDescription}
+                  className="text-decoration-none px-0"
+                >
+                  {isExpanded ? "Show less" : "Show more"}
+                </Button>
+              )}
             </div>
-            <CheckoutDetails product={product} />
+            <CheckoutOptions product={product} />
           </Col>
         </Row>
       </>
@@ -130,34 +141,38 @@ const ProductPage = () => {
   };
 
   const SeeAlsoSection = () => {
-    const commonStyle = {
+    const mobileStyle = {
       boxSizing: "border-box",
       gap: "1rem",
     };
 
     const desktopStyle = {
-      ...commonStyle,
+      ...mobileStyle,
       gridTemplateColumns: "repeat(6, 1fr)",
     };
 
     const tabletStyle = {
-      ...commonStyle,
+      ...mobileStyle,
       gridTemplateColumns: "repeat(2, 1fr)",
     };
 
+    let seeAlsoStyles;
+    if (isMobile) {
+      seeAlsoStyles = mobileStyle;
+    } else if (isTablet) {
+      seeAlsoStyles = tabletStyle;
+    } else {
+      seeAlsoStyles = desktopStyle;
+    }
+
     return (
       <Row
-        className="px-lg-1 px-xl-3 mx-0 my-5"
-        style={{ width: "100%", boxShadow: "border-box" }}
+        className="px-lg-1 px-xl-3 mx-0 my-5 w-100"
+        style={{ boxShadow: "border-box" }}
       >
         <Col sm={12} xl={{ span: 10, offset: 1 }}>
           <h2 className="fs-4 mb-3">See Also</h2>
-          <div
-            className="d-grid"
-            style={
-              isMobile ? commonStyle : isTablet ? tabletStyle : desktopStyle
-            }
-          >
+          <div className="d-grid" style={seeAlsoStyles}>
             {similarProducts.map((similarProduct) =>
               isMobile ? (
                 <ProductCardX key={similarProduct.id} item={similarProduct} />

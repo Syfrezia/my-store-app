@@ -1,29 +1,44 @@
-import { Home, CategoryPage, ProductPage, ResultPage } from "./pages";
+import {
+  Home,
+  CategoryPage,
+  ProductPage,
+  ResultPage,
+  CheckoutPage,
+  PaymentPage,
+} from "./pages";
 import { Header, Footer } from "./layouts";
 import ScrollToTop from "./utils/ScrollToTop";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import SearchProvider from "./contexts/SearchProvider";
-import { CartProvider } from "./contexts/CartProvider";
+import AppProvider from "./contexts/AppProvider";
+import { useShowLayout } from "./hooks/useShowLayout";
 import "./styles/App.css";
 
-function App() {
+const Application = () => {
+  const showLayout = useShowLayout();
+
+  return (
+    <AppProvider>
+      {showLayout && <Header />}
+      <ScrollToTop />
+      <Routes>
+        <Route exact path="/" element={<Home />} />
+        <Route path="/product/:productId" element={<ProductPage />} />
+        <Route path="/category/:category" element={<CategoryPage />} />
+        <Route path="/result" element={<ResultPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/payment" element={<PaymentPage />} />
+      </Routes>
+      {showLayout && <Footer />}
+    </AppProvider>
+  );
+};
+
+const App = () => {
   return (
     <Router>
-      <SearchProvider>
-        <CartProvider>
-          <Header />
-          <ScrollToTop />
-          <Routes>
-            <Route exact path="/" element={<Home />} />
-            <Route path="/product/:productId" element={<ProductPage />} />
-            <Route path="/category/:category" element={<CategoryPage />} />
-            <Route path="/result" element={<ResultPage />} />
-          </Routes>
-          <Footer />
-        </CartProvider>
-      </SearchProvider>
+      <Application />
     </Router>
   );
-}
+};
 
 export default App;

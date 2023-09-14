@@ -5,12 +5,14 @@ const SearchItem = ({ handleSearchItemClick, product }) => {
   return (
     <Link
       to={`/product/${product.id}`}
-      className="text-dark fw-semibold"
-      style={{ textDecoration: "none" }}
+      className="text-dark fw-regular d-grid text-decoration-none"
+      style={{ gridTemplateColumns: "1fr 9fr" }}
       onClick={handleSearchItemClick}
     >
-      <FaSearch className="me-2" />
-      <span>{product.title}</span>
+      <div className="d-flex align-items-center justify-content-center">
+        <FaSearch />
+      </div>
+      <div>{product.title}</div>
     </Link>
   );
 };

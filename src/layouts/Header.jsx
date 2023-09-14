@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Container, Row, Col, Navbar, Button, Badge } from "react-bootstrap";
+import { Container, Row, Col, Navbar } from "react-bootstrap";
 import { useMediaQuery } from "react-responsive";
-import { FaShoppingCart } from "react-icons/fa";
+import { CartButton, CategoriesButton } from "../components";
 import { Link } from "react-router-dom";
 import Search from "../features/search-bar/Search";
 import Cart from "../features/cart-component/Cart";
-import FilterOverlay from "../components/FilterOverlay";
+import FilterOverlay from "../components/filter/FilterOverlay";
 import { useCart } from "../contexts/CartProvider";
 
 const Header = () => {
@@ -30,46 +30,10 @@ const Header = () => {
     </Navbar.Brand>
   );
 
-  const renderCategoriesButton = (
-    <Button
-      as={Link}
-      to="/category/all"
-      variant="link"
-      className="text-light fw-semibold me-3 p-1 d-flex justify-content-center align-items-center"
-      style={{ textDecoration: "none" }}
-    >
-      Categories
-    </Button>
-  );
-
-  const renderCartButton = (
-    <Button
-      onClick={toggleCart}
-      variant="link"
-      className="text-light fw-semibold p-1 d-flex justify-content-center align-items-center"
-      style={{
-        textDecoration: "none",
-        position: "relative",
-        width: "3rem",
-        height: "2.5rem",
-      }}
-    >
-      <FaShoppingCart className="fs-3" />
-      {calculateTotalQuantity() > 0 && (
-        <Badge
-          bg="danger"
-          className="rounded-3"
-          style={{ position: "absolute", top: "0", right: "0" }}
-        >
-          {calculateTotalQuantity()}
-        </Badge>
-      )}
-    </Button>
-  );
-
-  const renderDesktopHeader = (
+  const desktopHeader = (
     <>
       <Cart isCartOpen={isCartOpen} toggleCart={toggleCart} />
+
       <Container
         fluid
         className="px-lg-5 py-lg-2 m-0"
@@ -83,15 +47,18 @@ const Header = () => {
             <Search setIsOverlayOpen={setIsOverlayOpen} />
           </Col>
           <Col lg={3} className="d-flex justify-content-end px-0">
-            {renderCategoriesButton}
-            {renderCartButton}
+            <CategoriesButton />
+            <CartButton
+              toggleCart={toggleCart}
+              calculateTotalQuantity={calculateTotalQuantity}
+            />
           </Col>
         </Row>
       </Container>
     </>
   );
 
-  const renderMobileHeader = (
+  const mobileHeader = (
     <>
       <Cart isCartOpen={isCartOpen} toggleCart={toggleCart} />
 
@@ -108,8 +75,11 @@ const Header = () => {
             {renderBrand}
           </Col>
           <Col xs={8} sm={8} md={7} className="d-flex justify-content-end px-0">
-            {renderCategoriesButton}
-            {renderCartButton}
+            <CategoriesButton />
+            <CartButton
+              toggleCart={toggleCart}
+              calculateTotalQuantity={calculateTotalQuantity}
+            />
           </Col>
         </Row>
         <Row className="p-0 m-0" style={{ width: "100%" }}>
@@ -124,7 +94,7 @@ const Header = () => {
     </>
   );
 
-  const header = isMobile ? renderMobileHeader : renderDesktopHeader;
+  const header = isMobile ? mobileHeader : desktopHeader;
 
   return (
     <>

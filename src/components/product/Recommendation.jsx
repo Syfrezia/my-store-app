@@ -1,6 +1,6 @@
 import { Card, Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { catalogues } from "../constants";
+import { catalogues } from "../../constants";
 
 const Recommendation = () => {
   const generateCard = (category) => (
