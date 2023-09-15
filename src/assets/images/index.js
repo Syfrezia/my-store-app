@@ -1,11 +1,11 @@
-import electronics from "../images/electronics.jpg";
-import jewelery from "../images/jewelery.jpg";
-import menClothing from "../images/men's clothing.jpg";
-import womenClothing from "../images/women's clothing.jpg";
-import emptyCart from "../images/empty-cart.jpg";
-import paypal from "../images/paypal.svg";
-import applePay from "../images/apple pay.svg";
-import googlePay from "../images/google pay.svg";
+import electronics from "./electronics.jpg";
+import jewelery from "./jewelery.jpg";
+import menClothing from "./men's clothing.jpg";
+import womenClothing from "./women's clothing.jpg";
+import emptyCart from "./empty-cart.jpg";
+import paypal from "./paypal.svg";
+import applePay from "./apple pay.svg";
+import googlePay from "./google pay.svg";
 
 export {
   electronics,

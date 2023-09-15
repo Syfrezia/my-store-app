@@ -1,20 +1,20 @@
-import CarouselSection from "../components/product/CarouselSection";
-import Recommendation from "../components/product/Recommendation";
-import CheckoutOptions from "../components/checkout/CheckoutOptions";
-import CustomBreadcrumb from "../components/common/CustomBreadcrumb";
-import FilterOverlay from "../components/filter/FilterOverlay";
-import ProductCard from "../components/product/ProductCard";
-import ProductCardX from "../components/product/ProductCardX";
-import OrderReview from "../components/checkout/OrderReview";
-import CheckoutEmptyList from "../components/checkout/CheckoutEmptyList";
-import CheckoutList from "../components/checkout/CheckoutList";
-import CheckoutItem from "../components/checkout/CheckoutItem";
-import ShippingForm from "../components/checkout/ShippingForm";
-import DeliveryOptions from "../components/checkout/DeliveryOptions";
-import GiftCodeButton from "../components/common/GiftCodeButton";
-import BackButton from "../components/common/BackButton";
-import CartButton from "../components/common/CartButton";
-import CategoriesButton from "../components/common/CategoriesButton";
+import CarouselSection from "./product/CarouselSection";
+import Recommendation from "./product/Recommendation";
+import CheckoutOptions from "./checkout/CheckoutOptions";
+import CustomBreadcrumb from "./common/CustomBreadcrumb";
+import FilterOverlay from "./filter/FilterOverlay";
+import ProductCard from "./product/ProductCard";
+import ProductCardX from "./product/ProductCardX";
+import OrderReview from "./checkout/OrderReview";
+import CheckoutEmptyList from "./checkout/CheckoutEmptyList";
+import CheckoutList from "./checkout/CheckoutList";
+import CheckoutItem from "./checkout/CheckoutItem";
+import ShippingForm from "./checkout/ShippingForm";
+import DeliveryOptions from "./checkout/DeliveryOptions";
+import GiftCodeButton from "./common/GiftCodeButton";
+import BackButton from "./common/BackButton";
+import CartButton from "./common/CartButton";
+import CategoriesButton from "./common/CategoriesButton";
 
 export {
   CarouselSection,

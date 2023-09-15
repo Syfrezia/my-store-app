@@ -1,9 +1,9 @@
-import Home from "../pages/Home";
-import ProductPage from "../pages/ProductPage";
-import CategoryPage from "../pages/CategoryPage";
-import ResultPage from "../pages/ResultPage";
-import CheckoutPage from "../pages/CheckoutPage";
-import PaymentPage from "../pages/PaymentPage";
+import Home from "./Home";
+import ProductPage from "./ProductPage";
+import CategoryPage from "./CategoryPage";
+import ResultPage from "./ResultPage";
+import CheckoutPage from "./CheckoutPage";
+import PaymentPage from "./PaymentPage";
 
 export {
   Home,
