@@ -3,10 +3,12 @@ import { CheckoutItem } from "..";
 const CheckoutList = ({ cart }) => {
   return (
     <div
-      className="d-flex flex-column justify-content-center"
       style={{
-        maxWidth: "100%",
-        minWidth: "15rem",
+        width: "100%",
+        height: "fit-content",
+        maxHeight: "22.5rem",
+        overflowY: "scroll",
+        scrollSnapType: "y mandatory",
       }}
     >
       {cart

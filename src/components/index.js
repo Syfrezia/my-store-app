@@ -10,7 +10,7 @@ import CheckoutEmptyList from "./checkout/CheckoutEmptyList";
 import CheckoutList from "./checkout/CheckoutList";
 import CheckoutItem from "./checkout/CheckoutItem";
 import ShippingForm from "./checkout/ShippingForm";
-import DeliveryOption from "./checkout/DeliveryOption";
+import DeliveryOptions from "./checkout/DeliveryOptions";
 import GiftCodeButton from "./common/GiftCodeButton";
 import BackButton from "./common/BackButton";
 import CartButton from "./common/CartButton";
@@ -29,7 +29,7 @@ export {
   CheckoutList,
   CheckoutItem,
   ShippingForm,
-  DeliveryOption,
+  DeliveryOptions,
   GiftCodeButton,
   BackButton,
   CartButton,

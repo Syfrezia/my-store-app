@@ -1,20 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import {
   OrderReview,
   CheckoutEmptyList,
   CheckoutList,
   ShippingForm,
-  DeliveryOption,
+  DeliveryOptions,
   GiftCodeButton,
   BackButton,
 } from "../components";
 import { useCart } from "../contexts/CartProvider";
+import { useCheckout } from "../contexts/CheckoutProvider";
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 
 const CheckoutPage = () => {
   const [selectedDelivery, setSelectedDelivery] = useState("regular");
+  const { finalFee, updateFinalFee } = useCheckout();
 
   const handleDelOptChange = (event) => {
     setSelectedDelivery(event.target.value);
@@ -65,13 +67,17 @@ const CheckoutPage = () => {
     return numericOrderPrice + numericDeliveryFee + numericAppServiceFee;
   };
 
-  const finalFee = calculateFinalOrder().toFixed(2);
+  const finalOrder = calculateFinalOrder().toFixed(2);
+
+  useEffect(() => {
+    updateFinalFee(finalOrder);
+  }, [finalOrder]);
 
   const isDesktop = useMediaQuery({ minWidth: 992 });
 
   const orderSummary = (
     <>
-      <div className="fs-4 px-0 mb-3 fw-semibold text-uppercase">
+      <div className="fs-4 px-0 py-2 fw-semibold text-uppercase">
         Order Summary
       </div>
       <div className="d-grid px-0" style={{ rowGap: "0.2rem" }}>
@@ -99,7 +105,7 @@ const CheckoutPage = () => {
       <Row className="py-2 m-0 w-100 bg-white">
         <div className="p-lg-0" style={{ fontSize: "0.7rem" }}>
           By completing this order, I agree to the{" "}
-          <span className="text-success fw-semibold">terms and service</span>.
+          <span className="text-success fw-semibold">Terms & Conditions</span>.
         </div>
       </Row>
       <Row className="pb-3 m-0 mb-2 w-100 bg-white">
@@ -152,7 +158,7 @@ const CheckoutPage = () => {
 
       <Row className="py-3 m-0 mb-2 w-100 bg-white">
         <Col>
-          <DeliveryOption
+          <DeliveryOptions
             selectedDelivery={selectedDelivery}
             handleDelOptChange={handleDelOptChange}
           />
@@ -201,7 +207,7 @@ const CheckoutPage = () => {
               <ShippingForm />
             </div>
             <div className="w-100 mb-3">
-              <DeliveryOption
+              <DeliveryOptions
                 selectedDelivery={selectedDelivery}
                 handleDelOptChange={handleDelOptChange}
               />

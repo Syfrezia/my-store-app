@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Row, Col, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { formValue } from "../../constants";
 
 const ShippingForm = () => {

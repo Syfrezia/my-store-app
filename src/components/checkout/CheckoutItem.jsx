@@ -18,12 +18,12 @@ const CheckoutItem = ({ item }) => {
         gridTemplateColumns: "1fr 3fr",
         border: "1px solid #9e9e9e",
         borderRadius: "10px",
-        minHeight: "5rem",
-        height: "fit-content",
+        height: "7rem",
+        scrollSnapAlign: "start",
       }}
     >
       <div className="d-flex align-items-center justify-content-center">
-        <img src={image} alt={title} width={70} />
+        <img src={image} alt={title} height={70} />
       </div>
       <div className="d-grid" style={{ gridTemplateColumns: "3fr 1fr" }}>
         <div className="d-grid" style={{ gridTemplateRows: "1fr 1fr" }}>

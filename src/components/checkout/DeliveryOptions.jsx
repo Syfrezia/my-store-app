@@ -1,6 +1,6 @@
-import { Row, Col, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 
-const DeliveryOption = ({ selectedDelivery, handleDelOptChange }) => {
+const DeliveryOptions = ({ selectedDelivery, handleDelOptChange }) => {
   const deliveryDetails = [
     {
       price: "Free",
@@ -68,4 +68,4 @@ const DeliveryOption = ({ selectedDelivery, handleDelOptChange }) => {
   );
 };
 
-export default DeliveryOption;
+export default DeliveryOptions;
