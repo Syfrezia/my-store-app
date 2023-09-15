@@ -199,6 +199,9 @@ const CheckoutPage = () => {
                 <CheckoutList isDesktop={isDesktop} cart={cart} />
               )}
             </div>
+            <div className="mb-3">
+              <GiftCodeButton />
+            </div>
             <div className="w-100 mb-3">{orderSummary}</div>
             {orderTotal}
           </Col>
@@ -211,9 +214,6 @@ const CheckoutPage = () => {
                 selectedDelivery={selectedDelivery}
                 handleDelOptChange={handleDelOptChange}
               />
-            </div>
-            <div className="mb-3">
-              <GiftCodeButton />
             </div>
           </Col>
         </Row>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Container, Row, Col, Badge, Button } from "react-bootstrap";
+import { Container, Row, Col, Badge, Button, Spinner } from "react-bootstrap";
 import { getProductById, getProductsByCategory } from "../services/api";
 import { useMediaQuery } from "react-responsive";
 import {
@@ -45,7 +45,19 @@ const ProductPage = () => {
   }, [product, productId]);
 
   if (!product) {
-    return <div>Loading...</div>;
+    return (
+      <>
+        <div className="vw-100 vh-100 d-flex justify-content-center align-items-center">
+          <Spinner
+            animation="border"
+            role="status"
+            variant="success"
+            style={{ scale: "200%" }}
+          />
+        </div>
+        <div className="visually-hidden">Loading...</div>
+      </>
+    );
   }
 
   const BreadcrumbSection = () => {

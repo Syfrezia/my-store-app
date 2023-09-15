@@ -147,6 +147,7 @@ const PaymentPage = () => {
           <div className="px-2 d-flex justify-content-center align-items-center">
             <Button
               variant="success"
+              className="fs-4 fw-medium"
               style={{ flex: "1" }}
               disabled={!isCheckboxChecked}
             >

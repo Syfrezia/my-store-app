@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Container, Row, Col, ToggleButton } from "react-bootstrap";
+import { Container, Row, Col, ToggleButton, Spinner } from "react-bootstrap";
 import { useMediaQuery } from "react-responsive";
 import { Link, useLocation } from "react-router-dom";
 import ProductCard from "../components/product/ProductCard";
@@ -39,6 +39,22 @@ const CategoryPage = () => {
   const filteredProducts = selectedCategory
     ? products.filter((product) => product.category === selectedCategory)
     : products;
+
+  const LoadingSpinner = () => {
+    return (
+      <>
+        <div className="vw-100 vh-100 d-flex justify-content-center align-items-center">
+          <Spinner
+            animation="border"
+            role="status"
+            variant="success"
+            style={{ scale: "200%" }}
+          />
+        </div>
+        <div className="visually-hidden">Loading...</div>
+      </>
+    );
+  };
 
   const CategoryTitleSection = () => {
     return (
@@ -128,11 +144,17 @@ const CategoryPage = () => {
   };
 
   return (
-    <Container fluid>
-      <CategoryTitleSection />
-      <CategoryFilterSection />
-      <ProductCardSection />
-    </Container>
+    <>
+      {products.length == 0 ? (
+        <LoadingSpinner />
+      ) : (
+        <Container fluid>
+          <CategoryTitleSection />
+          <CategoryFilterSection />
+          <ProductCardSection />
+        </Container>
+      )}
+    </>
   );
 };
 
