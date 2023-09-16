@@ -52,9 +52,11 @@ const CarouselSection = () => {
             animation="glow"
             style={{
               width: "100%",
+              height: isMobile ? "100%" : "0",
             }}
           >
             <Placeholder xs={12} bg="success" size="lg" />
+            {isMobile && <Placeholder xs={8} bg="success" size="lg" />}
           </Placeholder>
 
           {!isMobile && (

@@ -33,12 +33,9 @@ const Application = () => {
   );
 };
 
-const App = () => {
-  return (
-    <Router>
-      <Application />
-    </Router>
-  );
-};
-
+const App = () => (
+  <Router>
+    <Application />
+  </Router>
+);
 export default App;

@@ -185,15 +185,17 @@ const ProductPage = () => {
         <Col sm={12} xl={{ span: 10, offset: 1 }}>
           <h2 className="fs-4 mb-3">See Also</h2>
           <div className="d-grid" style={seeAlsoStyles}>
-            {similarProducts.map((similarProduct) =>
-              isMobile ? (
-                <ProductCardX key={similarProduct.id} item={similarProduct} />
-              ) : isTablet ? (
-                <ProductCardX key={similarProduct.id} item={similarProduct} />
-              ) : (
-                <ProductCard key={similarProduct.id} item={similarProduct} />
-              )
-            )}
+            {similarProducts.map((similarProduct) => {
+              if (isMobile || isTablet) {
+                return (
+                  <ProductCardX key={similarProduct.id} item={similarProduct} />
+                );
+              } else {
+                return (
+                  <ProductCard key={similarProduct.id} item={similarProduct} />
+                );
+              }
+            })}
           </div>
         </Col>
       </Row>
