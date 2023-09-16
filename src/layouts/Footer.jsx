@@ -58,6 +58,7 @@ const Footer = () => {
       </Container>
       <div className="mt-4 text-center">
         <p>&copy; 2023 FakeStore. All rights reserved.</p>
+        <p>Developed by: @syfrezia</p>
       </div>
     </footer>
   );
