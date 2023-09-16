@@ -1,9 +1,9 @@
 import React from "react";
 
-const FilterOverlay = ({ overlayZindex, toggleCart }) => {
+const FilterOverlay = ({ overlayZindex, toggleCartOff }) => {
   return (
     <div
-    onClick={toggleCart}
+    onClick={toggleCartOff}
       className="overlay"
       style={{
         position: "fixed",

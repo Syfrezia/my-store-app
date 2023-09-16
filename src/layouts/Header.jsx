@@ -23,6 +23,12 @@ const Header = () => {
     setIsCartOpen((prev) => !prev);
   };
 
+  const toggleCartOff = () => {
+    isCartOpen ? setIsOverlayOpen(false) : setIsOverlayOpen(true);
+    setOverlayZindex((prev) => (prev === 1 ? 10 : 1));
+    setIsCartOpen(false);
+  };
+
   const renderBrand = (
     <Navbar.Brand as={Link} to="/" className="fs-3 py-0 fw-semibold">
       <span style={{ color: "#004000" }}>Fake</span>
@@ -102,7 +108,7 @@ const Header = () => {
         {isOverlayOpen && (
           <FilterOverlay
             overlayZindex={overlayZindex}
-            toggleCart={toggleCart}
+            toggleCartOff={toggleCartOff}
           />
         )}
         {header}
