@@ -1,6 +1,7 @@
 # My FakeStore App
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/Syfrezia/my-store-app)
+[![Vercel App](https://vercel.com/button)](https://appfakestore.vercel.app/)
 
 This is a simple e-commerce web application built using HTML, CSS, JavaScript, React.js, Vite, React-Bootstrap, and REST API.
 
