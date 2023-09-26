@@ -34,7 +34,7 @@ const Application = () => {
 };
 
 const App = () => (
-  <Router basename="/appfakestore.vercel.app">
+  <Router>
     <Application />
   </Router>
 );
