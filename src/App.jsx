@@ -34,7 +34,7 @@ const Application = () => {
 };
 
 const App = () => (
-  <Router>
+  <Router basename="/appfakestore">
     <Application />
   </Router>
 );
